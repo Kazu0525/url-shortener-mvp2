@@ -1,2 +1,2 @@
 # url-shortener-mvp2
-bulk確認用
+admin確認用
