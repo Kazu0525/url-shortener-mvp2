@@ -1,10 +1,11 @@
-# main.py - エントリーポイント
+# main.py - エントリーポイント（修正版）
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
 import os
 from routes import admin, api, main as main_routes
+from utils.database import init_db
+
+# データベース初期化
+init_db()
 
 # 設定
 BASE_URL = os.getenv("BASE_URL", "https://link-shortcut-flow-analysis.onrender.com")
