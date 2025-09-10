@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 import sqlite3
 import os
 from datetime import datetime
-from ..utils.helpers import generate_short_code, validate_url, clean_url
+from utils.helpers import generate_short_code, validate_url, clean_url
 
 router = APIRouter()
 
