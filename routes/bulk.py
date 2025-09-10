@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Form, HTTPException
+from fastapi import APIRouter, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 import sqlite3
@@ -36,8 +36,8 @@ def validate_url(url):
     return url.startswith(('http://', 'https://'))
 
 @router.get("/bulk", response_class=HTMLResponse)
-async def bulk_page():
-    return templates.TemplateResponse("bulk.html", {"request": {}})
+async def bulk_page(request: Request):
+    return templates.TemplateResponse("bulk.html", {"request": request})
 
 @router.post("/api/bulk-process")
 async def bulk_process(urls: str = Form(...)):
