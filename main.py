@@ -1,11 +1,31 @@
+# main.py - エントリーポイント
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routes import bulk
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+import os
+from routes import admin, api, main as main_routes
 
-app = FastAPI(title="LinkTracker Pro")
+# 設定
+BASE_URL = os.getenv("BASE_URL", "https://link-shortcut-flow-analysis.onrender.com")
+DB_PATH = os.getenv("DB_PATH", "url_shortener.db")
 
-# ルートのインポート
-app.include_router(bulk.router)
+# FastAPIアプリ
+app = FastAPI(
+    title="LinkTrack Pro",
+    description="URL短縮・分析プラットフォーム",
+    version="1.0.0"
+)
+
+# ルーターの登録
+app.include_router(main_routes.router)
+app.include_router(admin.router, prefix="/admin")
+app.include_router(api.router, prefix="/api")
+
+# ヘルスチェック
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": "2025-09-10T00:00:00Z"}
 
 if __name__ == "__main__":
     import uvicorn
